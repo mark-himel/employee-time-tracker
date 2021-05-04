@@ -1,2 +1,20 @@
 <h1><%= "Hi #{current_user.name}!" %></h1>
 <%= button_to "logout", destroy_user_session_path, method: :delete  %>
+
+<div>
+  <% if @clock_event.check_in? %>
+      <%= link_to 'Clock Out', check_out_user_path(current_user), method: :put %>
+  <% else %>
+      <%= link_to 'Clock In', check_in_user_path(current_user), method: :put %>
+  <% end %>
+</div>
+
+<div>
+  <% @clock_events.each do |ce| %>
+      Clock In: <%= ce.check_in.try(:strftime, "%m/%d/%y-%H:%M") %> Clock Out: <%= ce.check_out.try(:strftime, "%m/%d/%y-%H:%M") %> Total:
+      <% if ce.completed? %>
+          <%=  format_time(ce.total_hours) %>
+      <% end %>
+  <% end %>
+</div>
+
