@@ -26,6 +26,13 @@ gem 'jbuilder', '~> 2.5'
 # Authentication
 gem 'devise'
 
+# Simple Form
+gem 'simple_form'
+
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

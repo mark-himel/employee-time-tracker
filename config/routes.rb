@@ -12,4 +12,5 @@ Rails.application.routes.draw do
       put :check_out
     end
   end
+  resources :clock_events, only: %i(edit update)
 end

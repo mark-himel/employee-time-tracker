@@ -1,0 +1,12 @@
+<h1>Clock Event Update</h1>
+
+<div style="width: 50%; height: 50%;">
+  <%= simple_form_for(@clock_event) do |f| %>
+      <%= f.hidden_field :user_id %>
+      <%= f.input :check_in, as: :datetime %>
+      <%= f.input :check_out, as: :datetime %>
+      <%= f.button :submit %>
+  <% end %>
+  <br>
+  <%= link_to '<<<< Back', root_path %>
+</div>

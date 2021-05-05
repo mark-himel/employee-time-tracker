@@ -1,20 +1,36 @@
-<h1><%= "Hi #{current_user.name}!" %></h1>
-<%= button_to "logout", destroy_user_session_path, method: :delete  %>
+<h1 style="text-align: center"><%= "Hi #{current_user.name}!" %></h1>
+<div style="float: right; margin-right: 2%;">
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, class: 'btn btn-danger'  %>
+</div>
 
-<div>
+<div style="margin-left: 5%">
   <% if @clock_event.check_in? %>
-      <%= link_to 'Clock Out', check_out_user_path(current_user), method: :put %>
+      <%= link_to 'Check Out', check_out_user_path(current_user), method: :put, class: 'btn btn-primary' %>
   <% else %>
-      <%= link_to 'Clock In', check_in_user_path(current_user), method: :put %>
+      <%= link_to 'Check In', check_in_user_path(current_user), method: :put, class: 'btn btn-primary' %>
   <% end %>
 </div>
 
-<div>
-  <% @clock_events.each do |ce| %>
-      Clock In: <%= ce.check_in.try(:strftime, "%m/%d/%y-%H:%M") %> Clock Out: <%= ce.check_out.try(:strftime, "%m/%d/%y-%H:%M") %> Total:
-      <% if ce.completed? %>
-          <%=  format_time(ce.total_hours) %>
+<div style="clear: both; margin-top: 5%; margin-left: 5%">
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Check In Time</th>
+      <th>Check Out Time</th>
+      <th>Total Hours</th>
+      <th>Action</th>
+    </tr>
+    <% @clock_events.group_by { |c| c.check_in.to_date }.each do |_date, records| %>
+      <% records.each do |clock_event| %>
+        <tr>
+          <td><%= clock_event.check_in.strftime('%D') %></td>
+          <td><%= clock_event.check_in.strftime('%H:%M:%S') %></td>
+          <td><%= clock_event.check_out.strftime('%H:%M:%S') %></td>
+          <td><%= format_time(clock_event.total_hours) %></td>
+          <td><%= link_to 'Edit', edit_clock_event_path(clock_event) %></td>
+        </tr>
       <% end %>
-  <% end %>
+    <% end %>
+  </table>
 </div>
 
